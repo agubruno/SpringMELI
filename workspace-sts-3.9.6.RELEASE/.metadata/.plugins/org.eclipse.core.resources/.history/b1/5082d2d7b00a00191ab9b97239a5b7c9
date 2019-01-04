@@ -1,0 +1,6 @@
+package TareasAdimistracion.Proyecto;
+
+public class City {
+	int id;
+	String name;
+}

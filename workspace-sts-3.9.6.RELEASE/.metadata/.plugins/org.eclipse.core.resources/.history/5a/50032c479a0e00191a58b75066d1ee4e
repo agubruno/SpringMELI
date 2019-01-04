@@ -1,0 +1,55 @@
+package TareasAdimistracion.Proyecto;
+import TareasAdimistracion.Proyecto.UserService;
+import TareasAdimistracion.Proyecto.Response;
+import TareasAdimistracion.Proyecto.TareaService;
+import org.apache.commons.codec.binary.Base64;	
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+
+public class App 
+{
+    public static void main(String[] args) {
+    	
+    	//--------------USUARIOS------------------
+    	 new UserController(new UserService());
+        //--------------TAREAS------------------
+    	 new TareaController(new TareaService());
+    	 
+    	 //--------------AUTENTIFICACION API1------------------
+    	 String plainCreds = "kinexo:kinexo";
+    	 byte[] plainCredsBytes = plainCreds.getBytes();
+    	 byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
+    	 String base64Creds = new String(base64CredsBytes);
+    	 
+    	 HttpHeaders headers1 = new HttpHeaders();
+    	 headers1.add("Authorization", "Basic " + base64Creds);    
+    	 
+    	 //--------------AUTENTIFICACION API2------------------
+    	 HttpHeaders headers2 = new HttpHeaders();
+    	 RestTemplate rt = new RestTemplate();
+    	 
+    	 rt.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+    	 
+    	 String uri = new String("https://gentle-eyrie-95237.herokuapp.com/login");
+
+    	 UserHeroku user = new UserHeroku("kinexo","kinexo");
+    	 Gson gson = new Gson();
+    	 String JSON = gson.toJson(user);
+    	 System.out.println(JSON);
+    	 headers2.add("Authorization", JSON);
+   	     	 
+    	 HttpEntity<String> request = new HttpEntity<String>(headers2);
+
+    	 ResponseEntity<Response> response = rt.exchange(uri, HttpMethod.POST, request, Response.class);
+    	 Response account = response.getBody();    	 
+    }
+}

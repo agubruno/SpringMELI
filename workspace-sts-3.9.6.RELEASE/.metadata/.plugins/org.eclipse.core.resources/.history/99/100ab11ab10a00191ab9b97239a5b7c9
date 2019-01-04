@@ -1,0 +1,44 @@
+package TareasAdimistracion.Proyecto;
+
+import java.time.LocalDate;
+
+public class User {
+    
+	int id;
+    String firstName;
+    String lastName;
+    LocalDate birthDate;
+    City city;
+     
+    public User(int id, String firstName, String lastName, LocalDate birthDate, City city) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.city = city;
+    }
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+}

@@ -1,0 +1,15 @@
+package TareasAdimistracion.Proyecto;
+
+import java.util.Base64;	
+
+import org.eclipse.jetty.http.HttpHeader;
+
+public class RestTemplateFactory {
+	String plainCreds = "willie:p@ssword";
+	byte[] plainCredsBytes = plainCreds.getBytes();
+	byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
+	String base64Creds = new String(base64CredsBytes);
+
+	HttpHeader headers = new HttpHeader();
+	headers.add("Authorization", "Basic " + base64Creds);
+}

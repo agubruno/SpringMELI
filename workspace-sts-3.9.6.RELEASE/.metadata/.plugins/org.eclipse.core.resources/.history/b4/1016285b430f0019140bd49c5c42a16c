@@ -1,0 +1,18 @@
+package TareasAdimistracion.Proyecto;
+import TareasAdimistracion.Proyecto.UserService;
+
+public class App 
+{
+    public static void main(String[] args) {
+    	
+    	//--------------USUARIOS API------------------
+    	 new UserController(new UserService());
+        //--------------TAREAS API------------------
+    	 new TareaController(new TareaService());
+    	//--------------RESTTEMPLATE - AUTENTIFICACION API------------------ 
+    	 AutenticacionController AC = new AutenticacionController();
+    	 String token = AC.obtenerToken();
+    	 System.out.println(token);    	 
+
+    }
+}

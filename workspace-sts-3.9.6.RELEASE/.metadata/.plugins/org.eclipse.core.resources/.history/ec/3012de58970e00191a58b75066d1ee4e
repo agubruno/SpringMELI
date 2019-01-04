@@ -1,0 +1,7 @@
+package TareasAdimistracion.Proyecto;
+
+public class UserHeroku {
+	private String username;
+	private String password;
+
+}

@@ -1,0 +1,15 @@
+package TareasAdimistracion.Proyecto;
+import TareasAdimistracion.Proyecto.UserService;
+
+import TareasAdimistracion.Proyecto.TareaService;
+
+public class App 
+{
+    public static void main(String[] args) {
+    	
+    	//--------------USUARIOS------------------
+    	 new UserController(new UserService());
+        //--------------TAREAS------------------
+    	 new TareaController(new TareaService());
+    }
+}

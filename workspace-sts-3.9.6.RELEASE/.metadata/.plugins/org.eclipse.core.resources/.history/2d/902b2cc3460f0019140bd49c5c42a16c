@@ -1,0 +1,41 @@
+package TareasAdimistracion.Proyecto;
+
+import java.util.Arrays;
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
+import com.google.gson.Gson;
+
+public class AutenticacionController {
+	
+	private RestTemplate restTemplate = new RestTemplate();
+	private String URI = new String("https://gentle-eyrie-95237.herokuapp.com/login");
+	private UserHeroku user = new UserHeroku("kinexo","kinexo");
+	Gson gson = new Gson();
+	 
+	public AutenticacionController() {
+		URI = new String("https://gentle-eyrie-95237.herokuapp.com/login");
+		user = new UserHeroku("kinexo","kinexo");
+	}
+	public Token getToken(){
+		String JSON = gson.toJson(user);
+		HttpEntity<String> request = new HttpEntity<String>(JSON);
+		ResponseEntity<String> response = restTemplate.exchange(URI, HttpMethod.POST, request, String.class);
+		String TokenJSON = response.getBody();
+   	 	Token token = gson.fromJson(TokenJSON, Token.class);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.set("Authorization", token.getToken());
+		
+		HttpEntity<String> entity = new HttpEntity<String>("user",headers);
+		String result = restTemplate.postForObject("https://gentle-eyrie-95237.herokuapp.com/users	", entity, String.class);
+   	 	return token;
+     }		
+}

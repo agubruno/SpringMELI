@@ -1,0 +1,27 @@
+package TareasAdimistracion.Proyecto;
+import TareasAdimistracion.Proyecto.UserService;
+
+import org.springframework.http.HttpMethod;
+import org.springframework.http.client.support.BasicAuthorizationInterceptor;
+import org.springframework.web.client.RestTemplate;
+
+import TareasAdimistracion.Proyecto.TareaService;
+
+public class App 
+{
+    public static void main(String[] args) {
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+    	restTemplate.getInterceptors().add(
+    			  new BasicAuthorizationInterceptor("kinexo", "kinexo"));
+    	
+    	restTemplate.exchange(
+    			  "https://gentle-eyrie-95237.herokuapp.com/users", 
+    			  HttpMethod.GET, null, User.class);
+    	
+    	//--------------USUARIOS------------------
+    	 new UserController(new UserService());
+        //--------------TAREAS------------------
+    	 new TareaController(new TareaService());
+    }
+}

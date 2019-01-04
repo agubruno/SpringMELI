@@ -1,0 +1,31 @@
+package TareasAdimistracion.Proyecto;
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
+import com.google.gson.Gson;
+
+public class AutenticacionController {
+	
+	private RestTemplate restTemplate = new RestTemplate();
+	private String URI = new String("https://gentle-eyrie-95237.herokuapp.com/login");
+	private UserHeroku user = new UserHeroku("kinexo","kinexo");
+	Gson gson = new Gson();
+
+	 
+	public AutenticacionController() {
+		URI = new String("https://gentle-eyrie-95237.herokuapp.com/login");
+		user = new UserHeroku("kinexo","kinexo");
+		
+		String JSON = gson.toJson(user);
+		HttpEntity<String> request = new HttpEntity<String>(JSON);
+		ResponseEntity<String> response = restTemplate.exchange(URI, HttpMethod.POST, request, String.class);
+		String token = response.getBody();   
+		System.out.println(token);
+	}
+	     	 
+	
+}

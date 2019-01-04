@@ -1,0 +1,26 @@
+package TareasAdimistracion.Proyecto;
+import TareasAdimistracion.Proyecto.UserService;
+
+import TareasAdimistracion.Proyecto.TareaService;
+import org.apache.commons.codec.binary.Base64;	
+import org.springframework.http.HttpHeaders;
+
+public class App 
+{
+    public static void main(String[] args) {
+    	
+    	//--------------USUARIOS------------------
+    	 new UserController(new UserService());
+        //--------------TAREAS------------------
+    	 new TareaController(new TareaService());
+    	 
+    	 String plainCreds = "kinexo:kinexo";
+    	 byte[] plainCredsBytes = plainCreds.getBytes();
+    	 byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
+    	 String base64Creds = new String(base64CredsBytes);
+    	 
+    	 HttpHeaders headers = new HttpHeaders();
+    	 headers.add("Authorization", "Basic " + base64Creds);
+
+    }
+}

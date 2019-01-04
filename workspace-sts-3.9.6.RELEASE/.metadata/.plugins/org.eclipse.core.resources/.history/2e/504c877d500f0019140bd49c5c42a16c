@@ -1,0 +1,59 @@
+package TareasAdimistracion.Proyecto; 
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+
+
+public class UserService {
+	
+	public static Map users = new HashMap<>();
+    private static final AtomicInteger count = new AtomicInteger(0);
+    
+    public User findById(String id) {
+        return (User) users.get(id);
+    }
+ 
+    public User add(String firstName, String lastName, LocalDate birthDate, City city) {
+        int currentId = count.incrementAndGet();
+        User user = new User(currentId, firstName, lastName, birthDate, city);
+        users.put(String.valueOf(currentId), user);
+        return user;
+    }
+ 
+    public User update(String id, String firstName, String lastName, LocalDate birthDate, City city) {
+ 
+        User user = (User) users.get(id);
+        if (firstName != null) {
+            user.setFirstName(firstName);
+        }
+ 
+        if (lastName != null) {
+            user.setLastName(lastName);
+        }
+        
+        if (birthDate != null) {
+            user.setBirthDate(birthDate);
+        }
+        
+        if (city != null) {
+            user.setCity(city);
+        }
+        
+        users.put(id, user);
+        return user;
+ 
+    }
+ 
+    public void delete(String id) {
+        users.remove(id);
+    }
+ 
+    public List findAll() {
+        return new ArrayList<>(users.values());
+    }
+
+}
